@@ -75,10 +75,35 @@ class _HomeScreenState extends State<HomeScreen> {
           );
           
           if (scannedCode != null) {
-            await _dbHelper.insertTicket(
-              Ticket(code: scannedCode, dateAdded: DateTime.now()),
-            );
-            setState(() {});
+            // Check if ticket already exists
+            final exists = await _dbHelper.ticketExists(scannedCode);
+            
+            if (exists) {
+              // Show error message
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('This ticket already exists'),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              }
+            } else {
+              // Add new ticket
+              await _dbHelper.insertTicket(
+                Ticket(code: scannedCode, dateAdded: DateTime.now()),
+              );
+              setState(() {});
+              
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Ticket added successfully'),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              }
+            }
           }
         },
         child: const Icon(Icons.add),
