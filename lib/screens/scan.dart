@@ -8,7 +8,7 @@ class ScanScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Scan Ticket'),
+        title: const Text('Сканувати'),
       ),
       body: MobileScanner(
         onDetect: (capture) {

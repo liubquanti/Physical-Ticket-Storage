@@ -30,6 +30,7 @@ class DatabaseHelper {
       CREATE TABLE tickets(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         code TEXT,
+        title TEXT,
         dateAdded TEXT
       )
     ''');
@@ -54,5 +55,24 @@ class DatabaseHelper {
       whereArgs: [code],
     );
     return result.isNotEmpty;
+  }
+
+  Future<void> deleteTicket(int id) async {
+    final db = await database;
+    await db.delete(
+      'tickets',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  Future<void> updateTicketTitle(int id, String newTitle) async {
+    final db = await database;
+    await db.update(
+      'tickets',
+      {'title': newTitle},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 }
