@@ -3,6 +3,7 @@ import '../models/ticket.dart';
 import '../database/helper.dart';
 import 'scan.dart';
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -47,8 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xFF0D131F),
         title: const Text('Квитки'),
       ),
+      backgroundColor: const Color(0xFF0D131F),
       body: FutureBuilder<List<Ticket>>(
         future: _dbHelper.getTickets(),
         builder: (context, snapshot) {
@@ -60,46 +63,81 @@ class _HomeScreenState extends State<HomeScreen> {
             return const Center(child: Text('Поки квитків немає'));
           }
 
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  shrinkWrap: true,
+                  itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               final ticket = snapshot.data![index];
-              return Card(
-                margin: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onLongPress: () => _showBottomSheet(ticket),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          ticket.title,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        Text(
-                          'Added: ${ticket.dateAdded.toString()}',
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                        const SizedBox(height: 16),
-                        Center(
-                          child: BarcodeWidget(
-                            barcode: Barcode.pdf417(),
-                            data: ticket.code,
-                            width: 300,
-                            height: 100,
+                      Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: SvgPicture.asset(
+                        'assets/svg/train-path.svg',
+                        
+                      ),
+                    ),
+                    Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      color: const Color(0xFF242B35),
+                      margin: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onLongPress: () => _showBottomSheet(ticket),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                ticket.title,
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                              Text(
+                                'Додано: ${ticket.dateAdded.toString()}',
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                              const SizedBox(height: 10),
+                              Center(
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white,
+                                    ),
+                                  child: BarcodeWidget(
+                                  barcode: Barcode.pdf417(),
+                                  data: ticket.code,
+                                  height: 110,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ), 
+                    ],
                   ),
-                ),
-              );
-            },
+                );
+              }),
+              ),
+            ],
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(100),
+        ),
+        backgroundColor: const Color(0xFF8BE9FE),
         onPressed: () async {
           final scannedCode = await Navigator.push<String>(
             context,
@@ -140,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
             }
           }
         },
-        child: const Icon(Icons.add),
+        child: Icon(Icons.add, color: const Color(0xFF0C121C)),
       ),
     );
   }

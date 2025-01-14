@@ -16,6 +16,9 @@ class MainApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
+      darkTheme: ThemeData.dark(
+        useMaterial3: true,
+      ),
       home: const HomeScreen(),
     );
   }

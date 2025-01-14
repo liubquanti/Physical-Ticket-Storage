@@ -13,6 +13,7 @@ dependencies:
   path_provider: ^2.1.2
   sqflite: ^2.3.2
   barcode_widget: ^2.0.3
+  flutter_svg: ^2.0.17
 
 dev_dependencies:
   flutter_test:
@@ -21,3 +22,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/svg/train.svg
+    - assets/svg/train-path.svg
