@@ -1,0 +1,37 @@
+name: Auto-Build
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build-android:
+    name: Android Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          architecture: x64
+      - run: flutter pub get
+
+      - run: flutter build apk --release
+
+      - name: Calculate Version
+        id: version
+        run: echo "VERSION=v$((${{ github.run_number }} / 10)).$((${{ github.run_number }} % 10))" >> $GITHUB_ENV
+
+      - name: Upload Android APK to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/app/outputs/flutter-apk/app-release.apk
+          tag: "${{ env.VERSION }}"
+          overwrite: true
+          body: "Реліз версії ${{ env.VERSION }} для ${{ github.repository }}."
