@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import '../models/ticket.dart';
 import '../database/helper.dart';
 import 'scan.dart';
+
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'ticket.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -60,7 +62,20 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('Поки квитків немає'));
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: SvgPicture.asset(
+                      'assets/svg/train-path.svg',
+                    ),
+                  ),
+                  const Text('Поки квитків немає'),
+                ],
+              )
+            );
           }
 
           return Column(
@@ -75,14 +90,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
-                      children: [
+                    children: [
+                    if (index == 0)
                       Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: SvgPicture.asset(
-                        'assets/svg/train-path.svg',
-                        
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: SvgPicture.asset(
+                          'assets/svg/train.svg',
+                        ),
                       ),
-                    ),
                     Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
@@ -91,6 +106,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       margin: const EdgeInsets.all(8.0),
                       child: InkWell(
                         onLongPress: () => _showBottomSheet(ticket),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TicketDetailsScreen(ticket: ticket),
+                            ),
+                          );
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Column(

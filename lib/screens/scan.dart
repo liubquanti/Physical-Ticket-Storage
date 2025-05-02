@@ -10,8 +10,16 @@ class ScanScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Сканувати'),
       ),
-      body: MobileScanner(
-        onDetect: (capture) {
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
+          child: SizedBox(
+        width: double.infinity,
+        height: 200,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: MobileScanner(
+            onDetect: (capture) {
           final List<Barcode> barcodes = capture.barcodes;
           for (final barcode in barcodes) {
             if (barcode.rawValue != null) {
@@ -19,7 +27,11 @@ class ScanScreen extends StatelessWidget {
               return;
             }
           }
-        },
+            },
+          ),
+        ),
+          ),
+        ),
       ),
     );
   }
