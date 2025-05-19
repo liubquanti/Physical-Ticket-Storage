@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   build-android:
-    name: Android Build
+    name: Android Auto Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
