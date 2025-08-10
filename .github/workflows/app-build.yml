@@ -34,4 +34,4 @@ jobs:
           file: build/app/outputs/flutter-apk/app-release.apk
           tag: "${{ env.VERSION }}"
           overwrite: true
-          body: "Реліз версії ${{ env.VERSION }} для ${{ github.repository }}."
+          body: "Sortie de la version ${{ env.VERSION }} pour ${{ github.repository }}."
