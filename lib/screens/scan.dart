@@ -8,7 +8,7 @@ class ScanScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Сканувати'),
+  title: const Text('Scanner'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -107,14 +107,14 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                   Clipboard.setData(ClipboardData(text: widget.ticket.code));
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text('Код скопійовано'),
+                      content: Text('Code copié'),
                       duration: Duration(seconds: 1),
                     ),
                   );
                 },
                 icon: const Icon(Icons.copy, color: Colors.white70),
                 label: const Text(
-                  'Копіювати код',
+                  'Copier le code',
                   style: TextStyle(color: Colors.white70),
                 ),
               ),

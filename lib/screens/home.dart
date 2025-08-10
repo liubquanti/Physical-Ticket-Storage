@@ -23,22 +23,22 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: Text(initialTitle == null ? 'Додайте назву квитку' : 'Змініть назву квитка'),
+        title: Text(initialTitle == null ? 'Ajouter un titre de billet' : 'Modifier le titre du billet'),
         content: TextField(
           onChanged: (value) => title = value,
           controller: TextEditingController(text: initialTitle),
           decoration: const InputDecoration(
-            hintText: 'Квиток до...',
+            hintText: 'Billet pour...',
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Скасувати'),
+            child: const Text('Annuler'),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, title),
-            child: const Text('Зберегти'),
+            child: const Text('Enregistrer'),
           ),
         ],
       ),
@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF0D131F),
-        title: const Text('Квитки'),
+  title: const Text('Billets'),
       ),
       backgroundColor: const Color(0xFF0D131F),
       body: FutureBuilder<List<Ticket>>(
@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       'assets/svg/train-path.svg',
                     ),
                   ),
-                  const Text('Поки квитків немає'),
+      const Text('Aucun billet pour le moment'),
                 ],
               )
             );
@@ -124,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 style: Theme.of(context).textTheme.titleLarge,
                               ),
                               Text(
-                                'Додано: ${ticket.dateAdded.toString()}',
+                                'Ajouté : ${ticket.dateAdded.toString()}',
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               const SizedBox(height: 10),
@@ -174,7 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
               if (mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('Цей квиток вже додано'),
+                    content: Text('Ce billet a déjà été ajouté'),
                     backgroundColor: Colors.red,
                   ),
                 );
@@ -193,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('Квиток успішно додано'),
+                    content: Text('Billet ajouté avec succès'),
                     backgroundColor: Colors.green,
                   ),
                 );
@@ -214,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           ListTile(
             leading: const Icon(Icons.edit),
-            title: const Text('Змінити назву'),
+            title: const Text('Modifier le titre'),
             onTap: () {
               Navigator.pop(context);
               _editTicketTitle(ticket);
@@ -222,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           ListTile(
             leading: const Icon(Icons.delete, color: Colors.red),
-            title: const Text('Видалити', style: TextStyle(color: Colors.red)),
+            title: const Text('Supprimer', style: TextStyle(color: Colors.red)),
             onTap: () {
               Navigator.pop(context);
               _confirmDelete(ticket);
@@ -241,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Назву змінено'),
+            content: Text('Titre modifié'),
             backgroundColor: Colors.green,
           ),
         );
@@ -253,17 +253,17 @@ class _HomeScreenState extends State<HomeScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Підтвердження'),
-        content: const Text('Ви впевнені, що хочете видалити цей квиток?'),
+        title: const Text('Confirmation'),
+        content: const Text('Êtes-vous sûr de vouloir supprimer ce billet ?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Скасувати'),
+            child: const Text('Annuler'),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
             style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: const Text('Видалити'),
+            child: const Text('Supprimer'),
           ),
         ],
       ),
@@ -275,7 +275,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Квиток видалено'),
+            content: Text('Billet supprimé'),
             backgroundColor: Colors.red,
           ),
         );
